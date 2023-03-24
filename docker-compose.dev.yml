@@ -22,6 +22,8 @@ services:
         target: /app/src
     ports:
       - 3001:80
+    depends_on:
+      - db
   db:
     image: mariadb
     restart: always
