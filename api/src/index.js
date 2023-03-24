@@ -12,7 +12,6 @@ async function connectDb() {
     });
     console.log('Connected to MariaDB');
     await connMariaDb.query('CREATE DATABASE IF NOT EXISTS test');
-    await connMariaDb.query('CREATE TABLE IF NOT EXISTS counts (count INT)');
   } catch (err) {
     throw err;
   } finally {
@@ -31,6 +30,7 @@ app.get('/api/count', async (req, res) => {
     password: 'example',
     database: 'test',
   });
+  await connMariaDb.query('CREATE TABLE IF NOT EXISTS counts (count INT)');
   let data = await connMariaDb.query('SELECT count FROM counts');
   if (data.length === 0) {
     await connMariaDb.query('INSERT INTO counts (count) VALUES (0)');
